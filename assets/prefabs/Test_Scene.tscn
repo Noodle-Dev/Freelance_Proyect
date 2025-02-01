@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcy8bdxqss4lq"]
+
+[ext_resource type="PackedScene" uid="uid://cpf1c4fnlk857" path="res://assets/prefabs/Player/Player_Skin_Typer_Balta.tscn" id="1_mtima"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hthb5"]
+size = Vector2(1166, 49)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(585, 671)
+shape = SubResource("RectangleShape2D_hthb5")
+
+[node name="Player" parent="." instance=ExtResource("1_mtima")]
+position = Vector2(390, 274)

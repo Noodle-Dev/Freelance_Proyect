@@ -1,20 +1,22 @@
-[gd_scene load_steps=19 format=3 uid="uid://cpf1c4fnlk857"]
+[gd_scene load_steps=21 format=3 uid="uid://cpf1c4fnlk857"]
 
 [ext_resource type="Script" path="res://assets/scripts/Player/Player_Balta_Main_logic.gd" id="1_lp1pg"]
-[ext_resource type="Texture2D" uid="uid://buyebarfb3ah6" path="res://assets/sprites/Player/Balta/Balta_PlaceHolder.png" id="2_migcn"]
 [ext_resource type="Texture2D" uid="uid://jbafvenawrwh" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_01.png" id="2_vbv2h"]
 [ext_resource type="Texture2D" uid="uid://c1rnkuscapquo" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_02.png" id="3_tapq4"]
 [ext_resource type="Texture2D" uid="uid://itxjj2xc4qb4" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_03.png" id="4_n6go8"]
 [ext_resource type="Texture2D" uid="uid://bynv5lix6eaxx" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_04.png" id="5_wi4ss"]
+[ext_resource type="Texture2D" uid="uid://db3kyurhb6c1g" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_01.png" id="7_bkb1j"]
 [ext_resource type="Texture2D" uid="uid://caxuk3d5vi36m" path="res://assets/sprites/Player/Balta/Shoot_SPR/Shoot_01.png" id="7_p6lfi"]
-[ext_resource type="Texture2D" uid="uid://bwetgjnhmv1vg" path="res://assets/sprites/Player/Balta/Walk_Beast_Mode_SPR/Beast_Walk_01.png" id="7_yt1lq"]
 [ext_resource type="Texture2D" uid="uid://d22c65y6rmepd" path="res://assets/sprites/Player/Balta/Shoot_SPR/Shoot_02.png" id="8_8r1i3"]
-[ext_resource type="Texture2D" uid="uid://dba3cij1nlutx" path="res://assets/sprites/Player/Balta/Walk_Beast_Mode_SPR/Beast_Walk_02.png" id="8_gcoye"]
-[ext_resource type="Texture2D" uid="uid://uyr6ohy4axh8" path="res://assets/sprites/Player/Balta/Walk_Beast_Mode_SPR/Beast_Walk_03.png" id="9_8n524"]
+[ext_resource type="Texture2D" uid="uid://ckiyder105hs4" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_02.png" id="8_pbmgy"]
 [ext_resource type="Texture2D" uid="uid://dj8qxa6b6ifej" path="res://assets/sprites/Player/Balta/Shoot_SPR/Shoot_03.png" id="9_e8y3j"]
+[ext_resource type="Texture2D" uid="uid://rronkg4p21jk" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_03.png" id="9_iygoe"]
+[ext_resource type="Texture2D" uid="uid://bpd2rq33xi6xt" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_04.png" id="10_a8c7w"]
 [ext_resource type="Texture2D" uid="uid://4k604ses6ljf" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_01.png" id="10_qy4l4"]
 [ext_resource type="Texture2D" uid="uid://d0gvfb1xbq6il" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_02.png" id="11_a8g3b"]
+[ext_resource type="Texture2D" uid="uid://cuqm8uqmqtkos" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_05.png" id="11_k3400"]
 [ext_resource type="Texture2D" uid="uid://ds2aoh3s80d2s" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_03.png" id="12_j0icx"]
+[ext_resource type="Texture2D" uid="uid://cw3r7chr8h7ib" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_06.png" id="12_nnnd6"]
 [ext_resource type="Texture2D" uid="uid://b24p8vaw25sbm" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_04.png" id="13_6mf42"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_foxg4"]
@@ -38,33 +40,42 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_migcn")
+"texture": ExtResource("7_bkb1j")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vbv2h")
+}],
 "loop": true,
 "name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_yt1lq")
+"texture": ExtResource("7_bkb1j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_gcoye")
+"texture": ExtResource("8_pbmgy")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_8n524")
+"texture": ExtResource("9_iygoe")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_gcoye")
+"texture": ExtResource("10_a8c7w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_k3400")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_nnnd6")
 }],
 "loop": true,
 "name": &"run",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -76,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_e8y3j")
 }],
-"loop": true,
+"loop": false,
 "name": &"shoot",
 "speed": 5.0
 }, {
@@ -105,10 +116,10 @@ height = 130.0
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_lp1pg")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_foxg4")
-animation = &"jump"
+animation = &"shoot"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_a6gnk")

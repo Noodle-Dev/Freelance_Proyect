@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://buvfj10fjjogt"]
+
+[ext_resource type="Script" path="res://assets/scripts/Player/Normal_Bullet_Logic.gd" id="1_ay0v4"]
+[ext_resource type="Texture2D" uid="uid://cf4r487mnurj2" path="res://assets/sprites/Player/Balta/Balta_Bullet.png" id="2_kgcky"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kf62j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kgcky")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u05yv"]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_ay0v4")
+
+[node name="Doito" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.09, 0.09)
+sprite_frames = SubResource("SpriteFrames_kf62j")
+animation = &"idle"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_u05yv")

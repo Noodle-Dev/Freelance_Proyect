@@ -1,17 +1,109 @@
-[gd_scene load_steps=3 format=3 uid="uid://dcy8bdxqss4lq"]
+[gd_scene load_steps=12 format=3 uid="uid://dcy8bdxqss4lq"]
 
 [ext_resource type="PackedScene" uid="uid://cpf1c4fnlk857" path="res://assets/prefabs/Player/Player_Skin_Typer_Balta.tscn" id="1_mtima"]
+[ext_resource type="PackedScene" uid="uid://bu5rq74a27e8s" path="res://assets/prefabs/Pickups/Transformer_Typer_Pickup.tscn" id="2_i0peb"]
+[ext_resource type="PackedScene" uid="uid://f62rtp6su3yd" path="res://assets/prefabs/Pickups/Shield_Typer_Pickup.tscn" id="3_gpsn0"]
+[ext_resource type="Texture2D" uid="uid://dwgm8c6rklnqk" path="res://assets/sprites/props/board_Prop.png" id="4_tf311"]
+[ext_resource type="Texture2D" uid="uid://0i6o8tlpr4g5" path="res://assets/sprites/props/Table.png" id="5_d6bwu"]
+[ext_resource type="Shader" path="res://assets/shaders/Transition_Type_UI_Shader.gdshader" id="6_e57j3"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hthb5"]
-size = Vector2(1166, 49)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_atd88"]
+size = Vector2(1047.7, 187.168)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kn70n"]
+shader = ExtResource("6_e57j3")
+shader_parameter/fade = 1.0
+shader_parameter/tiling = 10.0
+
+[sub_resource type="Animation" id="Animation_v8xj4"]
+resource_name = "Trans"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/fade")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_2acwr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/fade")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5o6ra"]
+_data = {
+"RESET": SubResource("Animation_2acwr"),
+"Trans": SubResource("Animation_v8xj4")
+}
 
 [node name="Node2D" type="Node2D"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1084.0
+offset_bottom = 874.0
+color = Color(1, 0.423529, 0.203922, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(585, 671)
-shape = SubResource("RectangleShape2D_hthb5")
+[node name="BoardProp" type="Sprite2D" parent="."]
+position = Vector2(781, 232)
+scale = Vector2(0.511728, 0.511728)
+texture = ExtResource("4_tf311")
+
+[node name="Table" type="Sprite2D" parent="."]
+position = Vector2(420, 551)
+scale = Vector2(0.902932, 0.902932)
+texture = ExtResource("5_d6bwu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Table"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Table/StaticBody2D"]
+position = Vector2(152.835, 146.744)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_atd88")
 
 [node name="Player" parent="." instance=ExtResource("1_mtima")]
 position = Vector2(390, 274)
+
+[node name="Transformer" parent="." instance=ExtResource("2_i0peb")]
+position = Vector2(148, 493)
+
+[node name="Shield_P" parent="." instance=ExtResource("3_gpsn0")]
+position = Vector2(943, 503)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 810.0
+
+[node name="Transition" type="ColorRect" parent="Control"]
+material = SubResource("ShaderMaterial_kn70n")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.521569, 0.247059, 1)
+
+[node name="Trans_Player" type="AnimationPlayer" parent="Control/Transition"]
+libraries = {
+"": SubResource("AnimationLibrary_5o6ra")
+}
+autoplay = "Trans"

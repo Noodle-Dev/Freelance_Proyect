@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed: float = 500.0
 @export var direction: Vector2 = Vector2.RIGHT
 @export var lifetime: float = 3.0
+@onready var damage = 3
 
 func _ready():
 	velocity = direction * speed

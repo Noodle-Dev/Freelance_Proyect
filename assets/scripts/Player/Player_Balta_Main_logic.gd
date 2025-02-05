@@ -13,9 +13,12 @@ const KNOCKBACK_FORCE_X = 2000.0  # Horizontal knockback force
 const KNOCKBACK_FORCE_Y = -1500.0  # Vertical knockback force
 const INVULNERABILITY_DURATION = 1.0  # Duration of invulnerability after damage
 const PROJECTILE_SCENE = preload("res://assets/prefabs/Player/Bullet_Dorito_Balta.tscn")  # Load the projectile scene
+const SHIELD_DURATION = 5.0  # Shield lasts 5 seconds
+const DAMAGE_BOOST_DURATION = 5.0  # Damage boost lasts 5 seconds
 
 # Variables
 var is_invulnerable = false  # Temporarily avoid damage after hitting an enemy
+var is_damage_boosted = false  # Double damage effect
 var jump_count = 0  # Tracks the number of jumps
 var current_speed = 0.0  # Tracks the current horizontal speed
 var is_crouching = false  # Check if player is crouching
@@ -75,15 +78,34 @@ func _physics_process(delta):
 
 func _update_animations(direction):
 	if is_shooting:
-		return  # Prevent overriding shooting animation
-	elif is_crouching:
-		return  # Prevent looping crouch animation
-	elif not is_on_floor():
-		$Sprite2D.play("jump")
+		return  # No interrumpe la animación de disparo
+	
+	if is_invulnerable:
+		$Sprite2D.play("shield")  # Siempre muestra el escudo mientras está activo
+		return
+	
+	if is_crouching:
+		if is_damage_boosted:
+			$Sprite2D.play("crouch_boost")  # Animación especial para agachado con daño boost
+		else:
+			$Sprite2D.play("crouch")
+		return
+
+	if not is_on_floor():
+		if is_damage_boosted:
+			$Sprite2D.play("jump_boost")  # Animación especial para salto con daño boost
+		else:
+			$Sprite2D.play("jump")
 	elif direction != 0:
-		$Sprite2D.play("run")
+		if is_damage_boosted:
+			$Sprite2D.play("run_boost")  # Animación especial para correr con daño boost
+		else:
+			$Sprite2D.play("run")
 	else:
-		$Sprite2D.play("idle")
+		if is_damage_boosted:
+			$Sprite2D.play("idle_boost")  # Animación especial para estar quieto con daño boost
+		else:
+			$Sprite2D.play("idle")
 
 func _update_camera():
 	if camera_2d:
@@ -95,3 +117,23 @@ func _shoot_projectile():
 	get_parent().add_child(projectile)
 	projectile.global_position = global_position + Vector2(30 if not $Sprite2D.flip_h else -30, 0)  # Adjust spawn position
 	projectile.velocity = Vector2(600 if not $Sprite2D.flip_h else -600, 0)  # Adjust velocity direction
+	if is_damage_boosted:
+		projectile.damage *= 2  # Double the damage if power-up is active
+
+# Power-Up Functions
+func activate_shield():
+	$Sprite2D.play("shield")
+	print("Shield activated!")
+	is_invulnerable = true
+	#$Sprite2D.modulate = Color(0.5, 0.5, 1.0)  # Change player color to indicate shield
+	await get_tree().create_timer(SHIELD_DURATION).timeout
+	is_invulnerable = false
+	#$Sprite2D.modulate = Color(1, 1, 1)  # Revert player color
+
+func activate_damage_boost():
+	print("Damage Boost activated!")
+	is_damage_boosted = true
+	#$Sprite2D.modulate = Color(1.0, 0.5, 0.5)  # Change player color to indicate damage boost
+	await get_tree().create_timer(DAMAGE_BOOST_DURATION).timeout
+	is_damage_boosted = false
+	#$Sprite2D.modulate = Color(1, 1, 1)  # Revert player color

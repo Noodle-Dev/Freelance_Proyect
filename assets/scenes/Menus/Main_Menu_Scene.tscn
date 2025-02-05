@@ -1,0 +1,112 @@
+[gd_scene load_steps=11 format=3 uid="uid://c32if02aq2vih"]
+
+[ext_resource type="Texture2D" uid="uid://b6kbk0aex0w0i" path="res://assets/sprites/UI/BG_UI.png" id="1_bu0y8"]
+[ext_resource type="Script" path="res://assets/scripts/UIs/main_menu_scene_Logic.gd" id="1_ittek"]
+[ext_resource type="Texture2D" uid="uid://b6s1lsaauexl1" path="res://assets/sprites/UI/Main_Title.png" id="2_6lni8"]
+[ext_resource type="Texture2D" uid="uid://drmoofkxg4ehb" path="res://assets/sprites/UI/Play_Btn.png" id="3_w516c"]
+[ext_resource type="Texture2D" uid="uid://dodrptcbmm2rm" path="res://assets/sprites/UI/H_Play_Btn.png" id="4_icku5"]
+[ext_resource type="Shader" path="res://assets/shaders/Transition_Type_UI_Shader.gdshader" id="6_i2sn7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37u8j"]
+shader = ExtResource("6_i2sn7")
+shader_parameter/fade = 1.0
+shader_parameter/tiling = 10.0
+
+[sub_resource type="Animation" id="Animation_v8xj4"]
+resource_name = "Trans"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/fade")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_2acwr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/fade")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5o6ra"]
+_data = {
+"RESET": SubResource("Animation_2acwr"),
+"Trans": SubResource("Animation_v8xj4")
+}
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_ittek")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(540, 405)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_bu0y8")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(509, 217)
+scale = Vector2(0.355, 0.355)
+texture = ExtResource("2_6lni8")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 810.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Play_Button" type="TextureButton" parent="Control"]
+layout_mode = 0
+offset_left = 393.0
+offset_top = 408.0
+offset_right = 1949.0
+offset_bottom = 1336.0
+scale = Vector2(0.17, 0.17)
+texture_normal = ExtResource("3_w516c")
+
+[node name="HowToPlay_Button" type="TextureButton" parent="Control"]
+layout_mode = 0
+offset_left = 393.0
+offset_top = 568.0
+offset_right = 1949.0
+offset_bottom = 1496.0
+scale = Vector2(0.17, 0.17)
+texture_normal = ExtResource("4_icku5")
+
+[node name="Transition" type="ColorRect" parent="Control"]
+material = SubResource("ShaderMaterial_37u8j")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.521569, 0.247059, 1)
+
+[node name="Trans_Player" type="AnimationPlayer" parent="Control/Transition"]
+libraries = {
+"": SubResource("AnimationLibrary_5o6ra")
+}
+autoplay = "Trans"
+
+[connection signal="pressed" from="Control/Play_Button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Control/HowToPlay_Button" to="." method="_on_how_to_play_button_pressed"]

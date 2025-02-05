@@ -1,16 +1,22 @@
-[gd_scene load_steps=21 format=3 uid="uid://cpf1c4fnlk857"]
+[gd_scene load_steps=29 format=3 uid="uid://cpf1c4fnlk857"]
 
 [ext_resource type="Script" path="res://assets/scripts/Player/Player_Balta_Main_logic.gd" id="1_lp1pg"]
 [ext_resource type="Texture2D" uid="uid://jbafvenawrwh" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_01.png" id="2_vbv2h"]
 [ext_resource type="Texture2D" uid="uid://c1rnkuscapquo" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_02.png" id="3_tapq4"]
 [ext_resource type="Texture2D" uid="uid://itxjj2xc4qb4" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_03.png" id="4_n6go8"]
 [ext_resource type="Texture2D" uid="uid://bynv5lix6eaxx" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_04.png" id="5_wi4ss"]
+[ext_resource type="Texture2D" uid="uid://diw2rihjlfiny" path="res://assets/sprites/Player/Balta/Crouch_Beast_Mode/Crouch_Beast_01.png" id="6_s7ksm"]
 [ext_resource type="Texture2D" uid="uid://db3kyurhb6c1g" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_01.png" id="7_bkb1j"]
+[ext_resource type="Texture2D" uid="uid://buyap2b2aokca" path="res://assets/sprites/Player/Balta/Crouch_Beast_Mode/Crouch_Beast_02.png" id="7_m2xwn"]
 [ext_resource type="Texture2D" uid="uid://caxuk3d5vi36m" path="res://assets/sprites/Player/Balta/Shoot_SPR/Shoot_01.png" id="7_p6lfi"]
+[ext_resource type="Texture2D" uid="uid://bwetgjnhmv1vg" path="res://assets/sprites/Player/Balta/Walk_Beast_Mode_SPR/Beast_Walk_01.png" id="7_udluj"]
 [ext_resource type="Texture2D" uid="uid://d22c65y6rmepd" path="res://assets/sprites/Player/Balta/Shoot_SPR/Shoot_02.png" id="8_8r1i3"]
+[ext_resource type="Texture2D" uid="uid://dba3cij1nlutx" path="res://assets/sprites/Player/Balta/Walk_Beast_Mode_SPR/Beast_Walk_02.png" id="8_jt5xm"]
 [ext_resource type="Texture2D" uid="uid://ckiyder105hs4" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_02.png" id="8_pbmgy"]
+[ext_resource type="Texture2D" uid="uid://bssmo6o3quibv" path="res://assets/sprites/Player/Balta/Crouch_Beast_Mode/Crouch_Beast_03.png" id="8_wmobo"]
 [ext_resource type="Texture2D" uid="uid://dj8qxa6b6ifej" path="res://assets/sprites/Player/Balta/Shoot_SPR/Shoot_03.png" id="9_e8y3j"]
 [ext_resource type="Texture2D" uid="uid://rronkg4p21jk" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_03.png" id="9_iygoe"]
+[ext_resource type="Texture2D" uid="uid://uyr6ohy4axh8" path="res://assets/sprites/Player/Balta/Walk_Beast_Mode_SPR/Beast_Walk_03.png" id="9_wvpfn"]
 [ext_resource type="Texture2D" uid="uid://bpd2rq33xi6xt" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_04.png" id="10_a8c7w"]
 [ext_resource type="Texture2D" uid="uid://4k604ses6ljf" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_01.png" id="10_qy4l4"]
 [ext_resource type="Texture2D" uid="uid://d0gvfb1xbq6il" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_02.png" id="11_a8g3b"]
@@ -18,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://ds2aoh3s80d2s" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_03.png" id="12_j0icx"]
 [ext_resource type="Texture2D" uid="uid://cw3r7chr8h7ib" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_06.png" id="12_nnnd6"]
 [ext_resource type="Texture2D" uid="uid://b24p8vaw25sbm" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_04.png" id="13_6mf42"]
+[ext_resource type="Texture2D" uid="uid://8763l61x5edp" path="res://assets/sprites/Player/Balta/Shield_SPR/Shield_02.png" id="13_rwdnt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_foxg4"]
 animations = [{
@@ -40,6 +47,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_s7ksm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_m2xwn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wmobo")
+}],
+"loop": false,
+"name": &"crouch_boost",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("7_bkb1j")
 }],
 "loop": true,
@@ -48,10 +69,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("7_udluj")
+}],
+"loop": true,
+"name": &"idle_boost",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_vbv2h")
 }],
 "loop": true,
 "name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_wvpfn")
+}],
+"loop": true,
+"name": &"jump_boost",
 "speed": 5.0
 }, {
 "frames": [{
@@ -76,6 +113,31 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_udluj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jt5xm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wvpfn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jt5xm")
+}],
+"loop": true,
+"name": &"run_boost",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_rwdnt")
+}],
+"loop": false,
+"name": &"shield",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -113,13 +175,23 @@ animations = [{
 radius = 43.0
 height = 130.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1blxf"]
+radius = 48.0
+height = 152.0
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_lp1pg")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_foxg4")
-animation = &"shoot"
+animation = &"shield"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_a6gnk")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_1blxf")
+debug_color = Color(0.611554, 0.53837, 7.70092e-07, 0.42)

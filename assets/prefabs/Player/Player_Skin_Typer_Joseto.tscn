@@ -1,0 +1,123 @@
+[gd_scene load_steps=21 format=3 uid="uid://cnqm2gqvw3kc6"]
+
+[ext_resource type="PackedScene" uid="uid://cpf1c4fnlk857" path="res://assets/prefabs/Player/Player_Skin_Typer_Balta.tscn" id="1_ofrie"]
+[ext_resource type="Texture2D" uid="uid://bc42dmbij3grn" path="res://assets/sprites/Player/Joseto/crouch_joseto/crouch_joseto_1.png" id="2_i11p1"]
+[ext_resource type="Texture2D" uid="uid://8o2xpq15462u" path="res://assets/sprites/Player/Joseto/walk_Joseto/Walk_Joseto_1.png" id="2_o0j6c"]
+[ext_resource type="Texture2D" uid="uid://cgwm445ak2y78" path="res://assets/sprites/Player/Joseto/jump_joseto/Jump_Joseto_1.png" id="3_dlyo4"]
+[ext_resource type="Texture2D" uid="uid://c7idauv1mal16" path="res://assets/sprites/Player/Joseto/crouch_joseto/2.png" id="3_j3v4t"]
+[ext_resource type="Texture2D" uid="uid://7221yf8iwrkb" path="res://assets/sprites/Player/Joseto/jump_joseto/2.png" id="4_4rqfs"]
+[ext_resource type="Texture2D" uid="uid://de5pegti4ccql" path="res://assets/sprites/Player/Joseto/crouch_joseto/3.png" id="4_edsj6"]
+[ext_resource type="Texture2D" uid="uid://bwpwf62vremih" path="res://assets/sprites/Player/Joseto/walk_Joseto/Walk_Joseto_2.png" id="4_nw776"]
+[ext_resource type="Texture2D" uid="uid://cfdu1plsljq8b" path="res://assets/sprites/Player/Joseto/walk_Joseto/Walk_Joseto_3.png" id="5_ca0nr"]
+[ext_resource type="Texture2D" uid="uid://bq0xrl8jgwi4d" path="res://assets/sprites/Player/Joseto/jump_joseto/3.png" id="5_nh65t"]
+[ext_resource type="Texture2D" uid="uid://q8ldu0vje47a" path="res://assets/sprites/Player/Joseto/crouch_joseto/4.png" id="5_xouto"]
+[ext_resource type="Texture2D" uid="uid://r7huebw8fufs" path="res://assets/sprites/Player/Joseto/walk_Joseto/Walk_Joseto_4.png" id="6_8gmjf"]
+[ext_resource type="Texture2D" uid="uid://e0k3t8xxdvi" path="res://assets/sprites/Player/Joseto/jump_joseto/4.png" id="6_klwl0"]
+[ext_resource type="Texture2D" uid="uid://cerapsfcl7kbj" path="res://assets/sprites/Player/Joseto/shield_joseto/shield_joseto_1.png" id="10_ccc2x"]
+[ext_resource type="Texture2D" uid="uid://c6prxpsa5bn15" path="res://assets/sprites/Player/Joseto/shoot_joseto/shoot_joseto_1.png" id="10_hdf8e"]
+[ext_resource type="Texture2D" uid="uid://30e76qisud6b" path="res://assets/sprites/Player/Joseto/shield_joseto/shield_joseto_2.png" id="11_bel5h"]
+[ext_resource type="Texture2D" uid="uid://doxm438sgd1ri" path="res://assets/sprites/Player/Joseto/shoot_joseto/shoot_joseto_2.png" id="11_o43nq"]
+[ext_resource type="Texture2D" uid="uid://il0tvpgw7hih" path="res://assets/sprites/Player/Joseto/shield_joseto/shield_joseto_3.png" id="12_n5r70"]
+[ext_resource type="Texture2D" uid="uid://bnriq12pret5j" path="res://assets/sprites/Player/Joseto/shoot_joseto/shoot_joseto_3.png" id="12_t5mht"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0t85p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_i11p1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_j3v4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_edsj6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xouto")
+}],
+"loop": false,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_o0j6c")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dlyo4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4rqfs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nh65t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_klwl0")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_o0j6c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nw776")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ca0nr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8gmjf")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_ccc2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_bel5h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_n5r70")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ccc2x")
+}],
+"loop": true,
+"name": &"shield",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_hdf8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_o43nq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_t5mht")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[node name="Player" instance=ExtResource("1_ofrie")]
+
+[node name="Sprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_0t85p")
+animation = &"crouch"
+autoplay = "idle"
+frame = 3
+frame_progress = 1.0

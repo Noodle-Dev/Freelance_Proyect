@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cpf1c4fnlk857"]
+[gd_scene load_steps=33 format=3 uid="uid://cpf1c4fnlk857"]
 
 [ext_resource type="Script" path="res://assets/scripts/Player/Player_Balta_Main_logic.gd" id="1_lp1pg"]
 [ext_resource type="Texture2D" uid="uid://jbafvenawrwh" path="res://assets/sprites/Player/Balta/Crouch_SPR/Crouch_01.png" id="2_vbv2h"]
@@ -25,6 +25,10 @@
 [ext_resource type="Texture2D" uid="uid://cw3r7chr8h7ib" path="res://assets/sprites/Player/Balta/Walk_SPR/Walk_06.png" id="12_nnnd6"]
 [ext_resource type="Texture2D" uid="uid://b24p8vaw25sbm" path="res://assets/sprites/Player/Balta/Spawn_SPR/Spawn_04.png" id="13_6mf42"]
 [ext_resource type="Texture2D" uid="uid://8763l61x5edp" path="res://assets/sprites/Player/Balta/Shield_SPR/Shield_02.png" id="13_rwdnt"]
+[ext_resource type="Texture2D" uid="uid://0s3qn3ivm5dm" path="res://assets/sprites/Player/Balta/Shield_Broke_SPR/Shield_Broke_01.png" id="19_olp1b"]
+[ext_resource type="Texture2D" uid="uid://n06tvjci50h2" path="res://assets/sprites/Player/Balta/Shield_Broke_SPR/Shield_Broke_02.png" id="20_henx8"]
+[ext_resource type="Texture2D" uid="uid://bs8ef4lldrfui" path="res://assets/sprites/Player/Balta/Shield_Broke_SPR/Shield_Broke_03.png" id="21_71skm"]
+[ext_resource type="AudioStream" uid="uid://c8x4bjp5e5ed1" path="res://assets/Audio/sfx/walk_sfx.mp3" id="29_df3t2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_foxg4"]
 animations = [{
@@ -57,6 +61,11 @@ animations = [{
 }],
 "loop": false,
 "name": &"crouch_boost",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"die",
 "speed": 5.0
 }, {
 "frames": [{
@@ -141,6 +150,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("19_olp1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_henx8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_71skm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_71skm")
+}],
+"loop": true,
+"name": &"shield_end",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("7_p6lfi")
 }, {
 "duration": 1.0,
@@ -185,7 +211,8 @@ script = ExtResource("1_lp1pg")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_foxg4")
-animation = &"shield"
+animation = &"shield_end"
+frame_progress = 0.72888
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_a6gnk")
@@ -195,3 +222,6 @@ shape = SubResource("CapsuleShape2D_a6gnk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CapsuleShape2D_1blxf")
 debug_color = Color(0.611554, 0.53837, 7.70092e-07, 0.42)
+
+[node name="WalkSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("29_df3t2")

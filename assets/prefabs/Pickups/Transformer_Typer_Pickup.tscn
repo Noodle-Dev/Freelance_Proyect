@@ -1,7 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://bu5rq74a27e8s"]
+[gd_scene load_steps=8 format=3 uid="uid://bu5rq74a27e8s"]
 
 [ext_resource type="Texture2D" uid="uid://co55wwn66nltf" path="res://icon.svg" id="1_3aqdp"]
 [ext_resource type="Script" path="res://assets/scripts/Pickups_Logic/transformer_typer_pickup_Logic.gd" id="1_3x4xn"]
+[ext_resource type="Texture2D" uid="uid://dbxakxxqcwttv" path="res://assets/sprites/pickups/Boost_1.png" id="3_t7qor"]
+[ext_resource type="Texture2D" uid="uid://csiyeah4t6q1q" path="res://assets/sprites/pickups/Boost_2.png" id="4_duxts"]
+[ext_resource type="Texture2D" uid="uid://6xxlpfqtxivw" path="res://assets/sprites/pickups/Boost_3.png" id="5_u6hgd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sa3mv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_t7qor")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_duxts")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_u6hgd")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7b47l"]
 radius = 26.0
@@ -10,8 +30,17 @@ radius = 26.0
 script = ExtResource("1_3x4xn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_3aqdp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(4, -31)
+scale = Vector2(0.11, 0.11)
+sprite_frames = SubResource("SpriteFrames_sa3mv")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.145408
 
 [node name="Area2D" type="Area2D" parent="."]
 

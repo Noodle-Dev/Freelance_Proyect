@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dcy8bdxqss4lq"]
+[gd_scene load_steps=13 format=3 uid="uid://dcy8bdxqss4lq"]
 
 [ext_resource type="PackedScene" uid="uid://cpf1c4fnlk857" path="res://assets/prefabs/Player/Player_Skin_Typer_Balta.tscn" id="1_mtima"]
 [ext_resource type="PackedScene" uid="uid://bu5rq74a27e8s" path="res://assets/prefabs/Pickups/Transformer_Typer_Pickup.tscn" id="2_i0peb"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dwgm8c6rklnqk" path="res://assets/sprites/props/board_Prop.png" id="4_tf311"]
 [ext_resource type="Texture2D" uid="uid://0i6o8tlpr4g5" path="res://assets/sprites/props/Table.png" id="5_d6bwu"]
 [ext_resource type="Shader" path="res://assets/shaders/Transition_Type_UI_Shader.gdshader" id="6_e57j3"]
+[ext_resource type="PackedScene" uid="uid://cnqm2gqvw3kc6" path="res://assets/prefabs/Player/Player_Skin_Typer_Joseto.tscn" id="7_ypwig"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_atd88"]
 size = Vector2(1047.7, 187.168)
@@ -14,6 +15,21 @@ size = Vector2(1047.7, 187.168)
 shader = ExtResource("6_e57j3")
 shader_parameter/fade = 1.0
 shader_parameter/tiling = 10.0
+
+[sub_resource type="Animation" id="Animation_2acwr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/fade")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 
 [sub_resource type="Animation" id="Animation_v8xj4"]
 resource_name = "Trans"
@@ -29,21 +45,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
-}
-
-[sub_resource type="Animation" id="Animation_2acwr"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/fade")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5o6ra"]
@@ -73,7 +74,6 @@ texture = ExtResource("5_d6bwu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Table/StaticBody2D"]
 position = Vector2(152.835, 146.744)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_atd88")
 
 [node name="Player" parent="." instance=ExtResource("1_mtima")]
@@ -107,3 +107,7 @@ libraries = {
 "": SubResource("AnimationLibrary_5o6ra")
 }
 autoplay = "Trans"
+
+[node name="Player2" parent="." instance=ExtResource("7_ypwig")]
+position = Vector2(646, 319)
+is_player_one = false

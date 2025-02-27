@@ -30,11 +30,32 @@ var is_walking = false
 @onready var walk_sound = $WalkSound  
 @onready var sprite = $Sprite2D  
 
+# Estados del jugador
+enum PlayerState {
+	IDLE,
+	RUN,
+	JUMP,
+	CROUCH,
+	SHOOT,
+	SHIELD,
+	DAMAGE_BOOST
+}
+
+var current_state = PlayerState.IDLE
+var previous_state = PlayerState.IDLE  # Para manejar transiciones
+
 func _physics_process(delta):
+	apply_gravity(delta)
+	handle_player_input(delta)
+	update_animations()
+	update_camera()
+	move_and_slide()
+
+func apply_gravity(delta):
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	# Player controls dynamically assigned
+func handle_player_input(delta):
 	var player_prefix = "P1" if is_player_one else "P2"
 	var jump_action = "jump_" + player_prefix
 	var left_action = "left_" + player_prefix
@@ -42,16 +63,23 @@ func _physics_process(delta):
 	var crouch_action = "crouch_" + player_prefix
 	var shoot_action = "shoot_" + player_prefix
 
-	# Crouch handling
+	handle_crouch(crouch_action)
+	handle_movement(delta, left_action, right_action)
+	handle_jump(jump_action)
+	handle_shooting(shoot_action)
+
+func handle_crouch(crouch_action):
 	if Input.is_action_pressed(crouch_action):
 		if not is_crouching:
 			is_crouching = true
-			_set_animation("crouch")
+			change_state(PlayerState.CROUCH)
 		velocity.x = 0  
 	else:
 		is_crouching = false
+		if current_state == PlayerState.CROUCH:
+			change_state(PlayerState.IDLE)
 
-	# Horizontal movement
+func handle_movement(delta, left_action, right_action):
 	var direction = Input.get_axis(left_action, right_action)
 	if direction != 0 and not is_crouching:
 		current_speed = lerp(current_speed, float(direction * MAX_SPEED), ACCELERATION * delta / MAX_SPEED)
@@ -59,63 +87,63 @@ func _physics_process(delta):
 		if is_on_floor() and not is_walking:
 			is_walking = true
 			walk_sound.play()  
+		change_state(PlayerState.RUN)
 	else:
 		current_speed = lerp(current_speed, 0.0, DECELERATION * delta / MAX_SPEED)
 
 		if is_walking and (direction == 0 or not is_on_floor()):
 			is_walking = false
 			walk_sound.stop()
+		if current_state == PlayerState.RUN:
+			change_state(PlayerState.IDLE)
 
 	velocity.x = current_speed
 
-	# Flip sprite direction
 	if direction != 0:
 		sprite.flip_h = direction < 0
 
-	# Jump handling
+func handle_jump(jump_action):
 	if Input.is_action_just_pressed(jump_action) and jump_count < MAX_JUMPS and not is_crouching:
 		velocity.y = JUMP_VELOCITY
 		jump_count += 1
+		change_state(PlayerState.JUMP)
 
 	if is_on_floor():
 		jump_count = 0
+		if current_state == PlayerState.JUMP:
+			change_state(PlayerState.IDLE)
 
-	# Shooting handling
+func handle_shooting(shoot_action):
 	if Input.is_action_just_pressed(shoot_action) and not is_shooting:
 		_shoot_projectile()
 		is_shooting = true
-		_set_animation("shoot")
+		change_state(PlayerState.SHOOT)
+		await sprite.animation_finished
+		is_shooting = false
+		change_state(previous_state)  # Volver al estado anterior después de disparar
 
-	# Update animations and camera
-	_update_animations(direction)
-	_update_camera()
-
-	move_and_slide()
-
-func _update_animations(direction):
-	if is_shooting:
-		return  
-
-	if is_invulnerable:
-		_set_animation("shield")  
-		return
-	
-	if is_crouching:
-		_set_animation("crouch_boost" if is_damage_boosted else "crouch")
-		return
-
-	if not is_on_floor():
-		_set_animation("jump_boost" if is_damage_boosted else "jump")
-	elif direction != 0:
-		_set_animation("run_boost" if is_damage_boosted else "run")
-	else:
-		_set_animation("idle_boost" if is_damage_boosted else "idle")
+func update_animations():
+	match current_state:
+		PlayerState.IDLE:
+			_set_animation("idle_boost" if is_damage_boosted else "idle")
+		PlayerState.RUN:
+			_set_animation("run_boost" if is_damage_boosted else "run")
+		PlayerState.JUMP:
+			_set_animation("jump_boost" if is_damage_boosted else "jump")
+		PlayerState.CROUCH:
+			_set_animation("crouch_boost" if is_damage_boosted else "crouch")
+		PlayerState.SHOOT:
+			_set_animation("shoot")
+		PlayerState.SHIELD:
+			_set_animation("shield")
+		PlayerState.DAMAGE_BOOST:
+			_set_animation("boost_start")
 
 func _set_animation(anim_name):
 	if sprite.animation != anim_name:
 		sprite.play(anim_name)
 
-func _update_camera():
+func update_camera():
 	if camera_2d:
 		camera_2d.position = camera_2d.position.lerp(position, CAMERA_SMOOTHNESS)
 
@@ -127,27 +155,34 @@ func _shoot_projectile():
 	if is_damage_boosted:
 		projectile.damage *= 2  
 
+# Cambiar de estado
+func change_state(new_state):
+	if current_state != new_state:
+		previous_state = current_state
+		current_state = new_state
+		update_animations()
+
 # Power-Up Functions
 func activate_shield():
 	print("Shield activated!")
 	is_invulnerable = true
-	_set_animation("shield")
+	change_state(PlayerState.SHIELD)
 	await get_tree().create_timer(SHIELD_DURATION).timeout
 	_deactivate_shield()
 
 func _deactivate_shield():
 	is_invulnerable = false
-	_set_animation("shield_end")  
+	change_state(previous_state)
 	print("Shield ended!")
 
 func activate_damage_boost():
 	print("Damage Boost activated!")
 	is_damage_boosted = true
-	_set_animation("boost_start")  
+	change_state(PlayerState.DAMAGE_BOOST)
 	await get_tree().create_timer(DAMAGE_BOOST_DURATION).timeout
 	_deactivate_damage_boost()
 
 func _deactivate_damage_boost():
 	is_damage_boosted = false
-	_set_animation("boost_end")  
+	change_state(previous_state)
 	print("Damage Boost ended!")

@@ -110,4 +110,3 @@ autoplay = "Trans"
 
 [node name="Player2" parent="." instance=ExtResource("7_ypwig")]
 position = Vector2(646, 319)
-is_player_one = false
